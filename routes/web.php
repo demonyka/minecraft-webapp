@@ -20,5 +20,6 @@ Route::get('/webapp', function () {
     return inertia('CheckUser');
 })->name('webapp');
 
+Route::get('/webapp/registration', [\App\Http\Controllers\UserController::class, 'registration'])->name('registration');
 Route::get('/webapp/cabinet', [\App\Http\Controllers\UserController::class, 'cabinet'])->name('cabinet');
 

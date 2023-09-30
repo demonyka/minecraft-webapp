@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Http;
 
+use App\Models\User;
+
 class UserController extends Controller
 {
     public function sendTelegramMessage($chatId, $message, $link = null)
@@ -61,9 +63,31 @@ class UserController extends Controller
         }
 
     }
+    public function registration(Request $request) {
+        if($this->checkUser($request->query_id, $request->user, $request->auth_date, $request->hash) != true) {
+            return inertia('AuthError');
+        }
+        $user_json = json_decode($request->user);
+        if (!User::where('user_id', $user_json->id)->exists()) {
+            return inertia('Registration');
+        } else {
+            abort(403);
+        }
+    }
     public function cabinet(Request $request) {
         if($this->checkUser($request->query_id, $request->user, $request->auth_date, $request->hash) != true) {
             return inertia('AuthError');
+        } else {
+            $initData = [
+                'query_id' => $request->query_id,
+                'user' => $request->user,
+                'auth_date' => $request->auth_date,
+                'hash' => $request->hash,
+            ];
+            $user_json = json_decode($request->user);
+            if (!User::where('user_id', $user_json->id)->exists()) {
+                return redirect()->route('registration', $initData);
+            }
         }
         return inertia('Cabinet');
     }
