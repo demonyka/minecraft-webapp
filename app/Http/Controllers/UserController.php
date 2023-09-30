@@ -69,9 +69,27 @@ class UserController extends Controller
         }
         $user_json = json_decode($request->user);
         if (!User::where('user_id', $user_json->id)->exists()) {
-            return inertia('Registration');
+            if ($request->has('nickname') && $request->has('password') && $request->has('email')) {
+                $userData = [
+                    'user_id' => $user_json->id,
+                    'nickname' => $request->nickname,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'referal' => $request->referal,
+                ];
+                User::insert($userData);
+                $initData = [
+                    'query_id' => $request->query_id,
+                    'user' => $request->user,
+                    'auth_date' => $request->auth_date,
+                    'hash' => $request->hash,
+                ];
+                return redirect()->route('cabinet', $initData);
+            } else {
+                return inertia('Registration');
+            }
         } else {
-            abort(403);
+            return inertia('AuthError');
         }
     }
     public function cabinet(Request $request) {
