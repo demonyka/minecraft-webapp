@@ -3,23 +3,23 @@
   <div class="block-registration">
     <div class="block-input">
       <label for="nickname_input" id="reg_nickname">Ваш никнейм</label>
-      <input id="nickname_input" @focus="MoveLabel('reg_nickname', '-20px', '14px');" @focusout="checkNicknameAvailability(reg_nickname); reg_nickname ? false : MoveLabel('reg_nickname', '0', '16px');" v-model.trim="reg_nickname" type="text">
+      <input id="nickname_input" @focus="MoveLabel('reg_nickname', '-20px', '14px'); clearError('nickname_input', 'reg_nickname')" @focusout="checkNicknameAvailability(reg_nickname); reg_nickname ? false : MoveLabel('reg_nickname', '0', '16px');" v-model.trim="reg_nickname" type="text">
     </div>
     <div class="block-input">
       <label for="email_input" id="reg_email">Ваш адрес эл. почты</label>
-      <input id="email_input" @focus="MoveLabel('reg_email', '-20px', '14px');" @focusout="checkEmailAvailability(reg_email); reg_email ? false : MoveLabel('reg_email', '0', '16px');" v-model.trim="reg_email" type="text">
+      <input id="email_input" @focus="MoveLabel('reg_email', '-20px', '14px'); clearError('email_input', 'reg_email')" @focusout="checkEmailAvailability(reg_email); reg_email ? false : MoveLabel('reg_email', '0', '16px');" v-model.trim="reg_email" type="text">
     </div>
     <div class="block-input">
       <label for="password_input" id="reg_password">Введите пароль</label>
-      <input id="password_input" @focus="MoveLabel('reg_password', '-20px', '14px')" @focusout="checkPassword(reg_password); reg_password ? false : MoveLabel('reg_password', '0', '16px')" v-model="reg_password" type="password">
+      <input id="password_input" @focus="MoveLabel('reg_password', '-20px', '14px'); clearError('password_input', 'reg_password')" @focusout="checkPassword(reg_password); reg_password ? false : MoveLabel('reg_password', '0', '16px')" v-model="reg_password" type="password">
     </div>
     <div class="block-input">
       <label for="password_confirm_input" id="reg_password_confirm">Повторите пароль</label>
-      <input id="password_confirm_input" @focus="MoveLabel('reg_password_confirm', '-20px', '14px')" @focusout="checkPasswordConfirm(reg_password_confirm); reg_password_confirm ? false : MoveLabel('reg_password_confirm', '0', '16px')" v-model="reg_password_confirm" type="password">
+      <input id="password_confirm_input" @focus="MoveLabel('reg_password_confirm', '-20px', '14px'); clearError('password_confirm_input', 'reg_password_confirm')" @focusout="checkPasswordConfirm(reg_password_confirm); reg_password_confirm ? false : MoveLabel('reg_password_confirm', '0', '16px')" v-model="reg_password_confirm" type="password">
     </div>
     <div class="block-input">
       <label for="referal_input" id="reg_referal">Кто вас пригласил?</label>
-      <input id="referal_input" @focus="MoveLabel('reg_referal', '-20px', '14px')" @focusout="reg_referal ? false : MoveLabel('reg_referal', '0', '16px')" v-model.trim="reg_referal" type="text">
+      <input id="referal_input" @focus="MoveLabel('reg_referal', '-20px', '14px'); clearError('referal_input', 'reg_referal')" @focusout="reg_referal ? false : MoveLabel('reg_referal', '0', '16px')" v-model.trim="reg_referal" type="text">
     </div>
     <div class="block-button">
       <a 
@@ -85,7 +85,7 @@
             const isAvailable = response.data.isAvailable;
 
             if (!isAvailable) {
-              this.showError('Никнейм занят', 'Выберите другой никнейм');
+              this.showError('Некорректный никнейм', 'Пользователь с таким никнеймом уже существует');
               document.getElementById('nickname_input').style.border = '1px solid red'
               document.getElementById('nickname_input').style.color = 'red'
               document.getElementById('reg_nickname').style.color = 'red'
@@ -138,9 +138,9 @@
         }
       },
       async checkPassword(password) {
-        const validCharacters = /^[a-zA-Z0-9!@#$%&]*$/;
+        const validCharacters = /^[a-zA-Z0-9!@#$%&_-]*$/;
         if (!validCharacters.test(password) || password.length < 8 || password.length > 64) {
-          this.showError('Некорректный пароль', 'Допустимы только буквы a-zA-Z, цифры 0-9 и спец. символы !@#$%&, также длина должна быть от 8 до 64 символов');
+          this.showError('Некорректный пароль', 'Допустимы только буквы a-zA-Z, цифры 0-9 и спец. символы [!@#$%&_-], также длина должна быть от 8 до 64 символов');
           document.getElementById('password_input').style.border = '1px solid red'
           document.getElementById('password_input').style.color = 'red'
           document.getElementById('reg_password').style.color = 'red'
@@ -193,27 +193,56 @@
         const errorContainer = document.getElementById('errorContainer');
         errorContainer.style.right = '-100%';
       },
-      generateRegistrationLink() {
-        var tg = window.Telegram.WebApp;
-        var url_query = new URLSearchParams(tg.initData);
-        var query = url_query.get("query_id");
-        var user = url_query.get("user");
-        var date = url_query.get("auth_date");
-        var hash = url_query.get("hash");
-        const params = {
-          nickname: this.reg_nickname,
-          email: this.reg_email,
-          password: MD5(this.reg_password).toString(),
-          referal: this.reg_referal,
-          query_id: query,
-          user: user,
-          auth_date: date,
-          hash: hash,
-        };
+      async generateRegistrationLink() {
+        try {
+          const nickname = this.reg_referal;
+          const response = await axios.post('/check-nickname', { nickname });
+          const isAvailable = response.data.isAvailable;
+          console.log(await axios.post('/check-nickname', { nickname }))
 
-        return router.get('registration', params);
+
+          var tg = window.Telegram.WebApp;
+          var url_query = new URLSearchParams(tg.initData);
+          var query = url_query.get("query_id");
+          var user = url_query.get("user");
+          var date = url_query.get("auth_date");
+          var hash = url_query.get("hash");
+          const params = {
+            nickname: this.reg_nickname,
+            email: this.reg_email,
+            password: MD5(this.reg_password).toString(),
+            referal: this.reg_referal,
+            query_id: query,
+            user: user,
+            auth_date: date,
+            hash: hash,
+          };
+          const referalInput = document.getElementById('referal_input');
+          const regReferal = document.getElementById('reg_referal');
+
+          if (!isAvailable || this.reg_referal == null || this.reg_referal == '') {
+            referalInput.style.border = '1px solid var(--tg-theme-hint-color)';
+            referalInput.style.color = 'var(--tg-theme-text-color)';
+            regReferal.style.color = 'var(--tg-theme-hint-color)';
+            this.hideError();
+            return router.get('registration', params);
+          } else {
+            this.showError('Некорректный никнейм', 'Пользователя с таким никнеймом не существует');
+            referalInput.style.border = '1px solid red';
+            referalInput.style.color = 'red';
+            regReferal.style.color = 'red';
+            console.log(this.reg_referal);
+          }
+        } catch (error) {
+          console.error('Ошибка при проверке ника:', error);
+          this.showError('Ошибка сервера', 'Попробуйте позже');
+        }
       },
-      
+      clearError(input, label) {
+        document.getElementById(input).style.border = '1px solid var(--tg-theme-hint-color)';
+        document.getElementById(input).style.color = 'var(--tg-theme-text-color)';
+        document.getElementById(label).style.color = 'var(--tg-theme-hint-color)';     
+      }
     }
   };
 </script>

@@ -22,7 +22,8 @@ Route::get('/webapp', function () {
 
 Route::get('/webapp/registration', [\App\Http\Controllers\UserController::class, 'registration'])->name('registration');
 Route::post('/check-nickname', [\App\Http\Controllers\CheckController::class, 'checkNickname']);
-Route::post('/check-email', [\App\Http\Controllers\CheckController::class, 'checkEMail']);
+Route::post('/check-email', [\App\Http\Controllers\CheckController::class, 'checkEmail']);
+
 
 Route::get('/webapp/cabinet', [\App\Http\Controllers\UserController::class, 'cabinet'])->name('cabinet');
 

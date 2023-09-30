@@ -18,7 +18,7 @@ class CheckController extends Controller
 
       return response()->json(['isAvailable' => $isAvailable]);
   }
-  public function checkEMail(Request $request)
+  public function checkEmail(Request $request)
   {
       $email = $request->input('email');
 
