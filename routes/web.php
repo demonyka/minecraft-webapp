@@ -19,6 +19,9 @@ use Inertia\Inertia;
 Route::get('/webapp', function () {
     return inertia('CheckUser');
 })->name('webapp');
+Route::get('/skins/{filename}', [\App\Http\Controllers\StorageController::class, 'skinShow'])->where('filename', '(.*)');
+Route::get('/head/{filename}', [\App\Http\Controllers\StorageController::class, 'headShow'])->where('filename', '(.*)');
+
 
 Route::get('/webapp/registration', [\App\Http\Controllers\UserController::class, 'registration'])->name('registration');
 Route::post('/check-nickname', [\App\Http\Controllers\CheckController::class, 'checkNickname']);
