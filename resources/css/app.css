@@ -1,5 +1,5 @@
 body {
-  background-color: var(--tg-theme-bg-color);
+  background-color: var(--tg-theme-secondary-bg-color);
   color: var(--tg-theme-text-color);
   display: flex;
   justify-content: center;
@@ -9,16 +9,25 @@ body {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
 }
-.block-registration {
-  background-color: var(--tg-theme-bg-color);
-  box-shadow: 0px 0px 15px 0px #00000026;
-  width: 90vw;
-  border-radius: 15px;
+div.line {
+  width: 50%;
+  border-bottom: 3px solid var(--tg-theme-hint-color);
+  border-radius: 50px;
+  transform: translateX(50%);
+  margin-top: 30px;
+  opacity: .5;
 }
-.block-registration .block-input {
+div.block-registration {
+  background-color: var(--tg-theme-bg-color);
+  width: 100vw;
+  padding: 20px 0;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+div.block-registration div.block-input {
   position: relative;
 }
-.block-registration .block-input input {
+div.block-registration div.block-input input {
   outline: none;
   background-color: transparent;
   color: var(--tg-theme-text-color);
@@ -27,19 +36,19 @@ body {
   border-radius: 10px;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  width: 90%;
+  width: 80%;
   margin-top: 15px;
 }
-.block-registration .block-input label {
+div.block-registration div.block-input label {
   position: absolute; 
   top: 45%; 
-  left: 5vw; 
+  left: 10vw; 
   color: var(--tg-theme-hint-color);; 
   padding: 0 5px; 
   background-color: var(--tg-theme-bg-color); 
   transition: all 0.2s ease;
 }
-.block-registration .block-input input:-webkit-autofill,
+div.block-registration div.block-input input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
@@ -52,7 +61,7 @@ input:-webkit-autofill:active{
   background-color: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
   padding: 15px 10px;
-  width: 90%;
+  width: 80%;
   border-radius: 10px;
   text-align: center;
   text-decoration: none;
@@ -61,11 +70,11 @@ input:-webkit-autofill:active{
 .a-button-disactive {
   opacity: .5;
 }
-.block-registration .block-button {
+div.block-registration div.block-button {
   display: flex;
   justify-content: center;
 }
-.block-registration .block-button .a-button {
+div.block-registration div.block-button .a-button {
   margin: 15px 0 10px;
 }
 .error-message {
@@ -79,14 +88,26 @@ input:-webkit-autofill:active{
   text-align: left;
   transition: right 0.3s ease-in-out;
 }
-
 .error-message h4 {
   color: var(--tg-theme-text-color);
   margin: 0;
 }
-
 .error-message p {
   color: var(--tg-theme-text-color);
   margin: 10px 0 0;
   font-size: 14px;
 }
+
+div.block-cabinet {
+  background-color: var(--tg-theme-bg-color);
+  width: 100vw;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+div.block-cabinet img.head {
+  width: 128px;
+  height: 128px;
+  border-radius: 25px;
+  margin-top: 20px;
+}
+

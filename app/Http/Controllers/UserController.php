@@ -107,7 +107,8 @@ class UserController extends Controller
                 return redirect()->route('registration', $initData);
             }
         }
-        return inertia('Cabinet');
+        $userData = User::where('user_id', $user_json->id)->first();
+        return inertia('Cabinet', ['userData' => $userData]);
     }
 
 }

@@ -10,7 +10,7 @@
   position: relative;
   width: 80px;
   height: 80px;
-  top: calc(50vh - 50px);
+  top: calc(var(--tg-viewport-height)/2 - 50px);
 }
 .lds-ripple div {
   position: absolute;

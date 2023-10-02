@@ -16,9 +16,12 @@ return new class extends Migration
             $table->bigInteger('user_id')->unique();
             $table->string('nickname')->unique();
             $table->string('email')->unique();
-            $table->datetime('email_verified_at')->nullable();
+            $table->integer('balance')->default(0);
+            $table->datetime('reg_date')->default(now()->timezone('Europe/Moscow'));
             $table->string('password');
             $table->string('referal')->nullable();
+            $table->boolean('admin')->default(false);
+            
         });
     }
 

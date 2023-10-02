@@ -49,7 +49,7 @@ body {
 }
 .nav-menu {
   position: fixed;
-  bottom: 0;
+  top: calc(var(--tg-viewport-height) - 75px);
   left: 0;
   width: 100%;
 }
@@ -59,11 +59,10 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: var(--tg-theme-bg-color);
-  box-shadow: 0px 0px 15px 0px #00000026;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 5px 10px;
+  padding: 5px 10px 150px;
 }
 .nav-menu li {
   float: left;
@@ -91,7 +90,7 @@ body {
             Link
         },
         props: [
-            'currentPage'
+            'currentPage',
         ],
         data() {
             return {

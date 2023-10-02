@@ -1,6 +1,6 @@
 <template>
-  <h2 style="margin-bottom: 10px;">Регистрация</h2>
   <div class="block-registration">
+    <h2 style="margin: 0 0 10px;">Регистрация</h2>
     <div class="block-input">
       <label for="nickname_input" id="reg_nickname">Ваш никнейм</label>
       <input id="nickname_input" @focus="MoveLabel('reg_nickname', '-20px', '14px'); clearError('nickname_input', 'reg_nickname')" @focusout="checkNicknameAvailability(reg_nickname); reg_nickname ? false : MoveLabel('reg_nickname', '0', '16px');" v-model.trim="reg_nickname" type="text">
@@ -19,7 +19,7 @@
     </div>
     <div class="block-input">
       <label for="referal_input" id="reg_referal">Кто вас пригласил?</label>
-      <input id="referal_input" @focus="MoveLabel('reg_referal', '-20px', '14px'); clearError('referal_input', 'reg_referal')" @focusout="reg_referal ? false : MoveLabel('reg_referal', '0', '16px')" v-model.trim="reg_referal" type="text">
+      <input @keyup.enter="(nickname_correct == true && email_correct == true && password_correct == true && password_confirm_correct == true) ? generateRegistrationLink() : false" id="referal_input" @focus="MoveLabel('reg_referal', '-20px', '14px'); clearError('referal_input', 'reg_referal')" @focusout="reg_referal ? false : MoveLabel('reg_referal', '0', '16px')" v-model.trim="reg_referal" type="text">
     </div>
     <div class="block-button">
       <a 
@@ -30,6 +30,7 @@
     </a>
       <a v-else class="a-button a-button-disactive">Зарегистрироваться</a>
     </div>
+    <div class="line"></div>
   </div>
   <div class="error-message" id="errorContainer">
     <h4 id="errorTitle"></h4>

@@ -1,6 +1,8 @@
 <template>
-  <p>Hello</p>  
   <NavLayout currentPage="cabinet"/>
+  <div class="block-cabinet">
+    <img class="head" :src="`/head/${userData.nickname}.png`">
+  </div>
 </template>
   
 <script>
@@ -16,7 +18,7 @@
       };
     },
     props: [
-
+      'userData'
     ],
     created() {
 
