@@ -74,7 +74,7 @@
         var user = url_query.get("user");
         var date = url_query.get("auth_date");
         var hash = url_query.get("hash");
-        router.get(`/webapp/cabinet?query_id=${query}&user=${user}&auth_date=${date}&hash=${hash}`);
+        router.get(`/cabinet?query_id=${query}&user=${user}&auth_date=${date}&hash=${hash}`);
    
     }
   };

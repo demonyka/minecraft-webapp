@@ -9,7 +9,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-var tg = window.Telegram.WebApp;
+// var tg = window.Telegram.WebApp;
 // tg.expand();
 
 createInertiaApp({

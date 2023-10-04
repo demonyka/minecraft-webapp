@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 
 use App\Models\User;
 
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     public function sendTelegramMessage($chatId, $message, $link = null)
@@ -72,10 +74,12 @@ class UserController extends Controller
             if ($request->has('nickname') && $request->has('password') && $request->has('email')) {
                 $userData = [
                     'user_id' => $user_json->id,
+                    'user_username' => $user_json->username,
                     'nickname' => $request->nickname,
                     'email' => $request->email,
                     'password' => $request->password,
                     'referal' => $request->referal,
+                    'reg_date' => date('Y-m-d H:i:s', strtotime('+3 hours')),
                 ];
                 User::insert($userData);
                 $initData = [
@@ -92,6 +96,9 @@ class UserController extends Controller
             return inertia('AuthError');
         }
     }
+    public function test(Request $request) {
+        return now();
+    }
     public function cabinet(Request $request) {
         if($this->checkUser($request->query_id, $request->user, $request->auth_date, $request->hash) != true) {
             return inertia('AuthError');
@@ -107,8 +114,16 @@ class UserController extends Controller
                 return redirect()->route('registration', $initData);
             }
         }
-        $userData = User::where('user_id', $user_json->id)->first();
-        return inertia('Cabinet', ['userData' => $userData]);
+        
+        if ($request->nickname) {
+            $userData = User::where('nickname', $request->nickname)->first();
+            $userData['target_id'] = $userData['user_id'];
+            unset($userData['user_id']);
+        } else {
+            $userData = User::where('user_id', $user_json->id)->first();        
+        }
+        unset($userData['password']);
+        return inertia('Cabinet', ['userData' => $userData]); 
     }
 
 }

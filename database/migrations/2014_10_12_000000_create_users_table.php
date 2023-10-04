@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unique();
+            $table->string('user_username')->nullable();   
             $table->string('nickname')->unique();
             $table->string('email')->unique();
             $table->integer('balance')->default(0);
-            $table->datetime('reg_date')->default(now()->timezone('Europe/Moscow'));
+            $table->datetime('reg_date');
             $table->string('password');
             $table->string('referal')->nullable();
             $table->boolean('admin')->default(false);

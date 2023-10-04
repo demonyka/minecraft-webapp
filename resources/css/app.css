@@ -70,6 +70,13 @@ input:-webkit-autofill:active{
 .a-button-disactive {
   opacity: .5;
 }
+.a-message-button {
+  margin-bottom: 20px; 
+  background-color: transparent; 
+  border: 1px solid var(--tg-theme-button-color); 
+  width: auto; 
+  padding: 15px 20px;
+}
 div.block-registration div.block-button {
   display: flex;
   justify-content: center;
@@ -98,16 +105,61 @@ div.block-registration div.block-button .a-button {
   font-size: 14px;
 }
 
-div.block-cabinet {
+div.block_cabinet {
   background-color: var(--tg-theme-bg-color);
   width: 100vw;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
 }
-div.block-cabinet img.head {
-  width: 128px;
-  height: 128px;
-  border-radius: 25px;
-  margin-top: 20px;
+div.block_cabinet div.main {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  justify-content: center;
+}
+div.block_cabinet div.main div.text {
+  padding: 0 10px 0 15px;
+  text-align: left;
+}
+div.block_cabinet div.main div.text h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 85vw;
+  text-overflow: ellipsis;
+}
+div.block_cabinet div.main div.text p {
+  margin: 10px 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 85vw;
+  text-overflow: ellipsis;
+}
+div.block_cabinet div.main img.head {
+  width: 64px;
+  height: 64px;
+  border-radius: 15px;
 }
 
+div.block_cabinet div.main div.text h4 svg path {
+  fill: var(--tg-theme-text-color);
+}
+div.block_cabinet div.main div.text p svg path {
+  fill: var(--tg-theme-text-color);
+}
+
+div.block_cabinet div.main div.text h4 {
+  display: flex;
+  align-items: center;
+}
+div.block_cabinet div.main div.text p {
+  display: flex;
+  align-items: center;
+}
+
+div.block_cabinet div.main div.text h4 span {
+  margin-left: 5px;
+}
+div.block_cabinet div.main div.text p span {
+  margin-left: 5px;
+}

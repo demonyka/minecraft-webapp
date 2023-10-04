@@ -208,6 +208,7 @@
           var user = url_query.get("user");
           var date = url_query.get("auth_date");
           var hash = url_query.get("hash");
+          console.log(user);
           const params = {
             nickname: this.reg_nickname,
             email: this.reg_email,
